@@ -4,11 +4,13 @@
   --ink: #1E1E24;
   --muted: #6B6B76;
   --line: #E3E0DA;
-  --subtle: color-mix(in srgb, #5B9BD5 7%, var(--surface));
+  --primary: #5B9BD5;
+  --subtle: color-mix(in srgb, var(--primary) 7%, var(--surface));
   --primary-text: #3F6E98;
-  --focus: #A78BFA;
-  --glow-sm: 0 0 24px color-mix(in srgb, #5B9BD5 12%, transparent);
-  --glow-md: 0 0 48px color-mix(in srgb, #5B9BD5 18%, transparent);
+  --focus: #477AA8;
+  --glow-sm: 0 0 24px color-mix(in srgb, var(--primary) 12%, transparent);
+  --glow-md: 0 0 48px color-mix(in srgb, var(--primary) 18%, transparent);
+  --glow-lg: 0 0 64px color-mix(in srgb, var(--primary) 20%, transparent);
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: light;
 }
@@ -19,20 +21,31 @@
   --ink: #F7F5F2;
   --muted: #A3A3AD;
   --line: #3A3A44;
-  --subtle: color-mix(in srgb, #5B9BD5 10%, var(--surface));
+  --subtle: color-mix(in srgb, var(--primary) 10%, var(--surface));
   --primary-text: #75AFE0;
+  --focus: #A78BFA;
   color-scheme: dark;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-bottom: 5rem;
+}
+
+@media (min-width: 1024px) {
+  html { scroll-padding-top: 5rem; }
+}
 
 .bg-brand { background: linear-gradient(120deg, #5B9BD5, #A78BFA); }
 
 .glow-sm { box-shadow: var(--glow-sm); }
 .glow-md { box-shadow: var(--glow-md); }
+.glow-lg { box-shadow: var(--glow-lg); }
 
-.hover-glow { transition: transform 160ms var(--ease-calm), box-shadow 160ms var(--ease-calm), background-color 160ms var(--ease-calm); }
-.hover-glow:hover,
+.hover-glow {
+  transition: scale 160ms var(--ease-calm), box-shadow 160ms var(--ease-calm), background-color 160ms var(--ease-calm);
+}
+.hover-glow:hover { scale: 1.02; box-shadow: var(--glow-lg); }
 .hover-glow:focus-within { box-shadow: var(--glow-md); }
 
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
@@ -40,7 +53,7 @@ html { scroll-behavior: smooth; }
 .summary-reset::-webkit-details-marker { display: none; }
 
 .target-badge { display: none; }
-.practice-card:target { border-color: #5B9BD5; box-shadow: var(--glow-md); }
+.practice-card:target { border-color: var(--primary); box-shadow: var(--glow-md); }
 .practice-card:target .target-badge { display: inline-flex; }
 
 @keyframes float-1 { from { transform: translate3d(-4%, 3%, 0) scale(0.94); } to { transform: translate3d(8%, -6%, 0) scale(1.06); } }
@@ -61,5 +74,6 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
   .animate-float-1, .animate-float-2, .animate-float-3, .animate-ring,
   .animate-breathe-46, .animate-breathe-box { animation: none; }
+  .hover-glow:hover { scale: 1; }
   * { transition-duration: 0.01ms !important; }
 }
