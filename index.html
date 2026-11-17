@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FeelUp — психологічна допомога онлайн та антистрес</title>
+  <meta name="description" content="Обери свій настрій в один тап і отримай дихальну практику або аудіорелаксацію за кілька секунд. Без реєстрації, анонімно, безкоштовно.">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#5B9BD5', interactive: '#477AA8', hover: '#3C6A96' },
+            secondary: '#A78BFA',
+            crisis: { interactive: '#C15151' },
+            bg: 'var(--bg)',
+            surface: 'var(--surface)',
+            subtle: 'var(--subtle)',
+            ink: 'var(--ink)',
+            muted: 'var(--muted)',
+            line: 'var(--line)',
+            'primary-text': 'var(--primary-text)'
+          },
+          fontFamily: {
+            display: ['Unbounded', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            sans: ['"Golos Text"', 'ui-sans-serif', 'system-ui', 'sans-serif']
+          },
+          borderRadius: { card: '20px' },
+          maxWidth: { container: '1228px' }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="custom-styles.css">
+</head>
+<body class="bg-bg pb-20 font-sans text-base text-ink antialiased lg:pb-0">
+
+  <a href="#main" class="sr-only rounded-full bg-primary-interactive px-6 py-3 text-white focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50">Перейти до основного вмісту</a>
+
+  <header class="z-30 border-b border-line bg-bg lg:sticky lg:top-0">
+    <div class="mx-auto flex h-16 w-full max-w-container items-center gap-4 px-3 lg:h-20 lg:px-6">
+      <a href="#top" class="flex min-h-11 flex-1 items-center rounded-lg font-display text-base font-semibold tracking-tighter lg:text-xl" aria-label="FeelUp — на головну">feelup</a>
+      <nav class="hidden lg:block" aria-label="Головна навігація">
+        <ul class="flex items-center gap-8 text-sm text-muted">
+<li><a href="#practices" class="inline-flex min-h-11 items-center rounded-lg hover:text-ink">Практики</a></li>
+<li><a href="#how" class="inline-flex min-h-11 items-center rounded-lg hover:text-ink">Як це працює</a></li>
+<li><a href="#about" class="inline-flex min-h-11 items-center rounded-lg hover:text-ink">Про нас</a></li>
+<li><a href="#help" class="inline-flex min-h-11 items-center rounded-lg hover:text-ink">Допомога</a></li>
+        </ul>
+      </nav>
+      <div class="flex flex-1 items-center justify-end gap-3">
+        <button type="button" data-theme-toggle aria-pressed="false" class="group hidden min-h-11 items-center gap-2 rounded-full border border-line bg-surface px-4 text-sm text-ink hover:bg-subtle lg:inline-flex">
+          <span class="inline-block h-4 w-4 rounded-full border border-primary-interactive bg-transparent group-aria-pressed:bg-primary-interactive" aria-hidden="true"></span>
+          Темна тема
+        </button>
+        <a href="#help" class="hover-glow inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-full bg-crisis-interactive px-6 font-medium text-white active:scale-95 hidden lg:inline-flex">Мені дуже погано</a>
+        <button type="button" id="menu-open" aria-expanded="false" aria-controls="mobile-menu" aria-label="Відкрити меню" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-ink hover:bg-subtle lg:hidden">
+          <svg class="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 8h14M5 16h14"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <a href="#help" class="hover-glow inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-full bg-crisis-interactive px-6 font-medium text-white active:scale-95 fixed bottom-3 left-1/2 z-40 -translate-x-1/2 lg:hidden">Мені дуже погано</a>
+
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Мобільне меню" class="fixed inset-0 z-50 hidden flex flex-col bg-bg px-3 pb-6 pt-2 lg:hidden">
+    <div class="flex h-12 items-center">
+      <a href="#top" class="mr-auto flex min-h-11 items-center font-display text-base font-semibold tracking-tighter">feelup</a>
+      <button type="button" id="menu-close" aria-label="Закрити меню" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-ink">
+        <svg class="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <nav class="flex flex-1 items-center" aria-label="Мобільна навігація">
+      <ul class="flex flex-col gap-4 font-display text-2xl font-semibold text-muted">
+<li><a href="#practices" class="flex min-h-11 items-center hover:text-ink">Практики</a></li>
+<li><a href="#how" class="flex min-h-11 items-center hover:text-ink">Як це працює</a></li>
+<li><a href="#about" class="flex min-h-11 items-center hover:text-ink">Про нас</a></li>
+<li><a href="#help" class="flex min-h-11 items-center hover:text-ink">Допомога</a></li>
+      </ul>
+    </nav>
+    <button type="button" data-theme-toggle aria-pressed="false" class="group mb-16 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-line bg-surface px-4 text-sm text-ink">
+      <span class="inline-block h-4 w-4 rounded-full border border-primary-interactive bg-transparent group-aria-pressed:bg-primary-interactive" aria-hidden="true"></span>
+          Темна тема
+    </button>
+  </div>
+
+  <main id="main">
+    <section id="top" class="mx-auto grid w-full max-w-container grid-cols-1 items-center gap-8 px-6 py-10 lg:grid-cols-12 lg:py-16" aria-labelledby="hero-title">
+      <div class="lg:col-span-7">
+        <p class="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted"><span class="h-px w-8 bg-current" aria-hidden="true"></span>Швидка психологічна самодопомога</p>
+        <h1 id="hero-title" class="mb-6 max-w-2xl break-words font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl lg:leading-tight">Зроби вдих. Ми поруч, щоб допомогти зараз</h1>
+        <p class="mb-7 max-w-xl text-base leading-relaxed text-muted sm:text-lg">Обери свій настрій в один тап — отримай м’яку дихальну практику або аудіорелаксацію за кілька секунд.</p>
+        <a href="#practices" class="hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 h-12">Відновити спокій <svg class="h-5 w-5 fill-none stroke-current" viewBox="0 0 20 20" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg></a>
+        <p class="mt-3 text-xs text-muted">Без реєстрації · анонімно · безкоштовно</p>
+      </div>
+      <div class="hidden lg:col-span-5 lg:block">
+        <div class="glow-md relative isolate h-96 overflow-hidden rounded-card bg-surface" role="img" aria-label="Абстрактна анімація спокійного дихання">
+          <span class="animate-ring absolute inset-12 rounded-full border border-primary/40" aria-hidden="true"></span>
+          <span class="animate-float-1 bg-brand glow-sm absolute left-12 top-1/4 aspect-square w-5/12 rounded-full opacity-90" aria-hidden="true"></span>
+          <span class="animate-float-2 bg-brand glow-sm absolute bottom-10 right-6 aspect-square w-1/3 rounded-full opacity-80" aria-hidden="true"></span>
+          <span class="animate-float-3 bg-brand glow-sm absolute right-12 top-10 aspect-square w-1/4 rounded-full opacity-70" aria-hidden="true"></span>
+          <span class="animate-float-2 bg-brand glow-sm absolute bottom-6 left-14 aspect-square w-1/5 rounded-full opacity-60" aria-hidden="true"></span>
+          <span class="animate-float-3 bg-brand glow-sm absolute left-10 top-8 aspect-square w-1/12 rounded-full opacity-75" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="rounded-card border border-line bg-surface p-4 lg:col-span-12 lg:p-6">
+        <p id="mood-label" class="mb-4 font-semibold">Як ти зараз? Обери настрій — ми підкажемо практику</p>
+        <ul class="grid grid-cols-3 gap-3 sm:grid-cols-5" aria-labelledby="mood-label">
+          <li>
+            <a href="#practice-breathing-46" class="hover-glow flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl border border-line bg-bg px-2 py-3 text-sm text-ink hover:border-primary-interactive hover:bg-subtle">
+              <svg class="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 13 3-6 3.2 10 3.4-11 3.1 10 4.3-6"/><path class="opacity-40" d="M4 20c4-2 12-2 16 0M5 4c3.5-1.5 10.5-1.5 14 0"/></svg>
+              Тривога
+            </a>
+          </li>
+          <li>
+            <a href="#practice-body" class="hover-glow flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl border border-line bg-bg px-2 py-3 text-sm text-ink hover:border-primary-interactive hover:bg-subtle">
+              <svg class="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7c3-2 5 2 8 0s5 2 10 0M5 12c3-2 5 2 8 0s4 1 6 0M8 17c2-1.5 3.5 1.5 5.5 0s2.5.5 3.5 0"/><path class="opacity-40" d="M7 21h10"/></svg>
+              Втома
+            </a>
+          </li>
+          <li>
+            <a href="#practice-box" class="hover-glow flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl border border-line bg-bg px-2 py-3 text-sm text-ink hover:border-primary-interactive hover:bg-subtle">
+              <svg class="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.2 6.2L20 5l-2.5 6.2 4.5 2.3-6.5 1.1 1.1 6.4-4.6-4.7L7.4 21l1.1-6.4L2 13.5l4.5-2.3L4 5l5.8 3.2L12 2Z"/></svg>
+              Гнів
+            </a>
+          </li>
+          <li>
+            <a href="#practice-rain" class="hover-glow flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl border border-line bg-bg px-2 py-3 text-sm text-ink hover:border-primary-interactive hover:bg-subtle">
+              <svg class="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c3 4.4 6.2 7.5 6.2 12a6.2 6.2 0 0 1-12.4 0c0-4.5 3.2-7.6 6.2-12Z"/><path class="opacity-40" d="M8.5 14.5c1.8 1.6 5.2 1.6 7 0M9.5 18c1.3.7 3.7.7 5 0"/></svg>
+              Сум
+            </a>
+          </li>
+          <li>
+            <a href="#practice-sleep" class="hover-glow flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl border border-line bg-bg px-2 py-3 text-sm text-ink hover:border-primary-interactive hover:bg-subtle">
+              <svg class="h-6 w-6 fill-none stroke-current" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M7 12c1.7-3 3.3-3 5 0s3.3 3 5 0"/><path class="opacity-40" d="M9 16c1-1.3 2-1.3 3 0s2 1.3 3 0"/></svg>
+              Спокій
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+<section id="practices" class="mx-auto w-full max-w-container scroll-mt-20 px-6 py-16 lg:py-24" aria-labelledby="practices-title">
+      <div class="mb-10">
+        <p class="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted"><span class="h-px w-8 bg-current" aria-hidden="true"></span>Практики</p>
+        <h2 id="practices-title" class="max-w-2xl break-words font-display text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">Обери підтримку на сьогодні</h2>
+      </div>
+      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li>
+          <article id="practice-breathing-46" class="practice-card flex h-full scroll-mt-24 flex-col gap-3 rounded-card border border-line bg-surface p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
+              <p>Дихальна вправа · 3 хв</p>
+              <p class="rounded-full bg-subtle px-3 py-1 text-xs font-medium text-primary-text">Найшвидший старт</p>
+              <p class="target-badge rounded-full bg-primary-interactive px-3 py-1 text-xs font-medium text-white">Підібрано для тебе</p>
+            </div>
+            <h3 class="break-words text-xl font-semibold">Спокійне дихання 4–6</h3>
+            <p class="text-muted">Повільний видих довший за вдих допомагає заспокоїтися.</p>
+            <details class="mt-auto pt-3">
+              <summary class="summary-reset hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 cursor-pointer list-none">Почати вправу</summary>
+              <div class="mt-4 flex flex-col items-center gap-3 text-center">
+                <span class="animate-breathe-46 bg-brand glow-sm block h-24 w-24 rounded-full" aria-hidden="true"></span>
+                <p class="text-sm text-muted">Вдихай 4 секунди, видихай 6 секунд.</p>
+              </div>
+            </details>
+          </article>
+        </li>
+        <li>
+          <article id="practice-box" class="practice-card flex h-full scroll-mt-24 flex-col gap-3 rounded-card border border-line bg-surface p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
+              <p>Дихальна вправа · 4 хв</p>
+              <p class="target-badge rounded-full bg-primary-interactive px-3 py-1 text-xs font-medium text-white">Підібрано для тебе</p>
+            </div>
+            <h3 class="break-words text-xl font-semibold">Квадратне дихання</h3>
+            <p class="text-muted">Чотири рівні фази дихання допомагають зосередитися.</p>
+            <details class="mt-auto pt-3">
+              <summary class="summary-reset hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 cursor-pointer list-none">Почати вправу</summary>
+              <div class="mt-4 flex flex-col items-center gap-3 text-center">
+                <span class="animate-breathe-box bg-brand glow-sm block h-24 w-24 rounded-full" aria-hidden="true"></span>
+                <p class="text-sm text-muted">Вдих, пауза, видих, пауза — по 4 секунди кожна.</p>
+              </div>
+            </details>
+          </article>
+        </li>
+        <li>
+          <article id="practice-quick-relax" class="practice-card flex h-full scroll-mt-24 flex-col gap-3 rounded-card border border-line bg-surface p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
+              <p>Аудіо · 5 хв</p>
+              <p class="target-badge rounded-full bg-primary-interactive px-3 py-1 text-xs font-medium text-white">Підібрано для тебе</p>
+            </div>
+            <h3 class="break-words text-xl font-semibold">Швидкий релакс</h3>
+            <p class="text-muted">Коротка пауза серед напруженого дня.</p>
+            <details class="mt-auto pt-3">
+              <summary class="summary-reset hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 cursor-pointer list-none">Слухати</summary>
+              <audio class="mt-4 w-full" controls preload="none" src="assets/audio/quick-relax.wav">Ваш браузер не підтримує аудіо.</audio>
+            </details>
+          </article>
+        </li>
+        <li>
+          <article id="practice-body" class="practice-card flex h-full scroll-mt-24 flex-col gap-3 rounded-card border border-line bg-surface p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
+              <p>Аудіо · 8 хв</p>
+              <p class="target-badge rounded-full bg-primary-interactive px-3 py-1 text-xs font-medium text-white">Підібрано для тебе</p>
+            </div>
+            <h3 class="break-words text-xl font-semibold">Розслаблення тіла</h3>
+            <p class="text-muted">Поступове розслаблення в комфортному темпі.</p>
+            <details class="mt-auto pt-3">
+              <summary class="summary-reset hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 cursor-pointer list-none">Слухати</summary>
+              <audio class="mt-4 w-full" controls preload="none" src="assets/audio/soft-reset.wav">Ваш браузер не підтримує аудіо.</audio>
+            </details>
+          </article>
+        </li>
+        <li>
+          <article id="practice-rain" class="practice-card flex h-full scroll-mt-24 flex-col gap-3 rounded-card border border-line bg-surface p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
+              <p>Аудіо · 10 хв</p>
+              <p class="target-badge rounded-full bg-primary-interactive px-3 py-1 text-xs font-medium text-white">Підібрано для тебе</p>
+            </div>
+            <h3 class="break-words text-xl font-semibold">Звуки дощу</h3>
+            <p class="text-muted">Фоновий звук для спокійного відпочинку.</p>
+            <details class="mt-auto pt-3">
+              <summary class="summary-reset hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 cursor-pointer list-none">Слухати</summary>
+              <audio class="mt-4 w-full" controls preload="none" src="assets/audio/quiet-support.wav">Ваш браузер не підтримує аудіо.</audio>
+            </details>
+          </article>
+        </li>
+        <li>
+          <article id="practice-sleep" class="practice-card flex h-full scroll-mt-24 flex-col gap-3 rounded-card border border-line bg-surface p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-sm text-muted">
+              <p>Аудіо · 12 хв</p>
+              <p class="target-badge rounded-full bg-primary-interactive px-3 py-1 text-xs font-medium text-white">Підібрано для тебе</p>
+            </div>
+            <h3 class="break-words text-xl font-semibold">Спокійний сон</h3>
+            <p class="text-muted">М’який аудіосупровід перед сном.</p>
+            <details class="mt-auto pt-3">
+              <summary class="summary-reset hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 cursor-pointer list-none">Слухати</summary>
+              <audio class="mt-4 w-full" controls preload="none" src="assets/audio/sleep.wav">Ваш браузер не підтримує аудіо.</audio>
+            </details>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+<section id="how" class="mx-auto w-full max-w-container scroll-mt-20 px-6 py-16 lg:py-24" aria-labelledby="how-title">
+      <div class="mb-10">
+        <p class="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted"><span class="h-px w-8 bg-current" aria-hidden="true"></span>Як це працює</p>
+        <h2 id="how-title" class="max-w-2xl break-words font-display text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">Три прості кроки</h2>
+      </div>
+      <ol class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <li class="rounded-card border border-line bg-surface p-6">
+          <p class="mb-4 font-display text-sm text-primary-text">01</p>
+          <h3 class="mb-2 text-xl font-semibold">Обери, як ти зараз</h3>
+          <p class="text-muted">Познач свій настрій одним натисканням.</p>
+        </li>
+        <li class="rounded-card border border-line bg-surface p-6">
+          <p class="mb-4 font-display text-sm text-primary-text">02</p>
+          <h3 class="mb-2 text-xl font-semibold">Отримай підібрану практику</h3>
+          <p class="text-muted">Платформа запропонує дихальну вправу або аудіорелаксацію.</p>
+        </li>
+        <li class="rounded-card border border-line bg-surface p-6">
+          <p class="mb-4 font-display text-sm text-primary-text">03</p>
+          <h3 class="mb-2 text-xl font-semibold">Пройди її за таймером</h3>
+          <p class="text-muted">Обери тривалість і виконуй практику у своєму темпі.</p>
+        </li>
+      </ol>
+      <a href="#practices" class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-lg font-medium text-primary-text underline">Спробувати зараз <svg class="h-5 w-5 fill-none stroke-current" viewBox="0 0 20 20" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg></a>
+    </section>
+
+<section id="media" class="mx-auto w-full max-w-container scroll-mt-20 px-6 py-16 lg:py-24" aria-labelledby="media-title">
+      <div class="mb-10">
+        <p class="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted"><span class="h-px w-8 bg-current" aria-hidden="true"></span>Відео</p>
+        <h2 id="media-title" class="max-w-2xl break-words font-display text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">Практика у відео</h2>
+      </div>
+      <div class="glow-sm aspect-video w-full overflow-hidden rounded-card border border-line bg-surface">
+        <iframe class="h-full w-full" src="https://www.youtube-nocookie.com/embed/TvDJKPuLZSE" title="Відео на YouTube" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </section>
+
+<section id="about" class="mx-auto w-full max-w-container scroll-mt-20 px-6 py-16 lg:py-24" aria-labelledby="about-title">
+      <div class="mb-10">
+        <p class="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted"><span class="h-px w-8 bg-current" aria-hidden="true"></span>Про нас</p>
+        <h2 id="about-title" class="max-w-2xl break-words font-display text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">Наші принципи</h2>
+      </div>
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <li class="rounded-card border border-line bg-surface p-6">
+          <h3 class="mb-2 text-xl font-semibold">Анонімно</h3>
+          <p class="text-muted">Не потрібен акаунт.</p>
+        </li>
+        <li class="rounded-card border border-line bg-surface p-6">
+          <h3 class="mb-2 text-xl font-semibold">Безкоштовно</h3>
+          <p class="text-muted">Усі практики без оплати.</p>
+        </li>
+        <li class="rounded-card border border-line bg-surface p-6">
+          <h3 class="mb-2 text-xl font-semibold">Без діагнозів</h3>
+          <p class="text-muted">Платформа не ставить діагнозів.</p>
+        </li>
+      </ul>
+      <a href="#practices" class="mt-8 inline-flex min-h-11 items-center gap-2 rounded-lg font-medium text-primary-text underline">Спробувати зараз <svg class="h-5 w-5 fill-none stroke-current" viewBox="0 0 20 20" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg></a>
+    </section>
+
+<section class="mx-auto w-full max-w-container px-6 pb-16 lg:pb-24" aria-labelledby="cta-title">
+      <div class="glow-md flex flex-col items-start gap-6 rounded-card border border-line bg-surface p-8 sm:flex-row sm:items-center sm:justify-between lg:p-12">
+        <h2 id="cta-title" class="max-w-xl break-words font-display text-2xl font-semibold tracking-tight sm:text-3xl">Готовий зробити паузу?</h2>
+        <a href="#practices" class="hover-glow inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary-interactive px-6 font-medium text-white hover:bg-primary-hover active:scale-95 h-12">Відновити спокій <svg class="h-5 w-5 fill-none stroke-current" viewBox="0 0 20 20" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg></a>
+      </div>
+    </section>
+
+<section id="help" class="mx-auto w-full max-w-container scroll-mt-20 px-6 py-16 lg:py-24" aria-labelledby="help-title">
+      <div class="mb-10">
+        <p class="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted"><span class="h-px w-8 bg-current" aria-hidden="true"></span>Телефони й центри</p>
+        <h2 id="help-title" class="max-w-2xl break-words font-display text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">Допомога поруч</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="lg:order-2">
+          <p class="mb-4 text-muted">Якщо потрібна термінова допомога, зателефонуй на гарячу лінію.</p>
+          <ul class="flex flex-col gap-3">
+            <li class="rounded-2xl border border-line bg-surface p-4"><p class="text-sm text-muted">Lifeline Ukraine</p><a href="tel:7333" class="inline-flex min-h-11 items-center font-display text-xl font-semibold text-ink">7333</a><p class="text-sm text-muted">запобігання самогубствам і підтримка психічного здоров’я — цілодобово</p></li>
+            <li class="rounded-2xl border border-line bg-surface p-4"><p class="text-sm text-muted">Національна психологічна асоціація</p><a href="tel:0800100102" class="inline-flex min-h-11 items-center font-display text-xl font-semibold text-ink">0 800 100 102</a><p class="text-sm text-muted">психологічна підтримка — щодня 10:00–20:00</p></li>
+            <li class="rounded-2xl border border-line bg-surface p-4"><p class="text-sm text-muted">«Людина в біді»</p><a href="tel:0800210160" class="inline-flex min-h-11 items-center font-display text-xl font-semibold text-ink">0 800 210 160</a><p class="text-sm text-muted">психологічна підтримка — цілодобово</p></li>
+            <li class="rounded-2xl border border-line bg-surface p-4"><p class="text-sm text-muted">Урядова лінія</p><a href="tel:1547" class="inline-flex min-h-11 items-center font-display text-xl font-semibold text-ink">1547</a><p class="text-sm text-muted">протидія домашньому насильству та торгівлі людьми — цілодобово</p></li>
+          </ul>
+          <p class="mt-4 text-sm text-muted">Якщо є безпосередня загроза життю, телефонуй 112 або 103.</p>
+        </div>
+        <div class="lg:order-1 glow-sm aspect-video w-full overflow-hidden rounded-card border border-line bg-surface">
+          <iframe class="h-full w-full" src="https://www.google.com/maps?q=%D0%BF%D1%81%D0%B8%D1%85%D0%BE%D0%BB%D0%BE%D0%B3%D1%96%D1%87%D0%BD%D0%B0%20%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B3%D0%B0%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&amp;output=embed" title="Карта: психологічна допомога у Львові" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="mt-10">
+        <h3 class="mb-2 text-xl font-semibold">Центри психологічної допомоги у Львові</h3>
+        <p class="mb-6 text-sm text-muted">Перед візитом уточни години роботи та умови прийому за контактами закладу.</p>
+        <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <li class="flex flex-col gap-1 rounded-card border border-line bg-surface p-6">
+            <h4 class="text-lg font-semibold">Львівський міський центр соціальних служб</h4>
+            <p class="text-sm text-muted">вул. Театральна, 10</p>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B8%D0%B9%20%D0%BC%D1%96%D1%81%D1%8C%D0%BA%D0%B8%D0%B9%20%D1%86%D0%B5%D0%BD%D1%82%D1%80%20%D1%81%D0%BE%D1%86%D1%96%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D1%85%20%D1%81%D0%BB%D1%83%D0%B6%D0%B1%2C%20%D0%B2%D1%83%D0%BB.%20%D0%A2%D0%B5%D0%B0%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%2C%2010%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex min-h-11 items-center gap-2 font-medium text-primary-text underline">Відкрити на карті<span class="sr-only"> (відкриється в новій вкладці)</span></a>
+          </li>
+          <li class="flex flex-col gap-1 rounded-card border border-line bg-surface p-6">
+            <h4 class="text-lg font-semibold">Центр життєстійкості</h4>
+            <p class="text-sm text-muted">вул. Наукова, 59–61</p>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20%D0%B6%D0%B8%D1%82%D1%82%D1%94%D1%81%D1%82%D1%96%D0%B9%D0%BA%D0%BE%D1%81%D1%82%D1%96%2C%20%D0%B2%D1%83%D0%BB.%20%D0%9D%D0%B0%D1%83%D0%BA%D0%BE%D0%B2%D0%B0%2C%2059-61%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex min-h-11 items-center gap-2 font-medium text-primary-text underline">Відкрити на карті<span class="sr-only"> (відкриється в новій вкладці)</span></a>
+          </li>
+          <li class="flex flex-col gap-1 rounded-card border border-line bg-surface p-6">
+            <h4 class="text-lg font-semibold">Центр ментального здоров’я лікарні Святого Пантелеймона</h4>
+            <p class="text-sm text-muted">Адресу уточни на карті</p>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A6%D0%B5%D0%BD%D1%82%D1%80%20%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B3%D0%BE%20%D0%B7%D0%B4%D0%BE%D1%80%D0%BE%D0%B2%E2%80%99%D1%8F%20%D0%BB%D1%96%D0%BA%D0%B0%D1%80%D0%BD%D1%8F%20%D0%A1%D0%B2%D1%8F%D1%82%D0%BE%D0%B3%D0%BE%20%D0%9F%D0%B0%D0%BD%D1%82%D0%B5%D0%BB%D0%B5%D0%B9%D0%BC%D0%BE%D0%BD%D0%B0%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2" target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex min-h-11 items-center gap-2 font-medium text-primary-text underline">Відкрити на карті<span class="sr-only"> (відкриється в новій вкладці)</span></a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto grid w-full max-w-container grid-cols-1 gap-8 px-6 py-12 md:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <a href="#top" class="mb-4 inline-flex min-h-11 items-center font-display text-xl font-semibold tracking-tighter">feelup</a>
+        <p class="text-sm text-muted">Простір швидкої психологічної самодопомоги.</p>
+      </div>
+      <div>
+        <h2 class="mb-3 text-sm font-semibold">Допомога</h2>
+        <a href="#help" class="inline-flex min-h-11 items-center text-sm text-primary-text underline">Гарячі лінії та центри</a>
+        <p class="text-xs text-muted">Якщо є безпосередня загроза життю, телефонуй 112 або 103.</p>
+      </div>
+      <div>
+        <h2 class="mb-3 text-sm font-semibold">Важливо</h2>
+        <p class="mb-2 text-sm text-muted">Платформа не замінює очну медичну допомогу.</p>
+        <ul class="flex flex-col text-sm">
+          <li><a href="#top" class="inline-flex min-h-11 items-center text-primary-text underline">Політика конфіденційності</a></li>
+          <li><a href="#top" class="inline-flex min-h-11 items-center text-primary-text underline">Умови користування</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mx-auto w-full max-w-container border-t border-line px-6 py-6 text-xs text-muted">
+      <p>© 2026 FeelUp</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var menu = document.getElementById('mobile-menu');
+      var openBtn = document.getElementById('menu-open');
+      var closeBtn = document.getElementById('menu-close');
+      function setMenu(open) {
+        menu.classList.toggle('hidden', !open);
+        openBtn.setAttribute('aria-expanded', String(open));
+        document.body.classList.toggle('overflow-hidden', open);
+        (open ? closeBtn : openBtn).focus();
+      }
+      openBtn.addEventListener('click', function () { setMenu(true); });
+      closeBtn.addEventListener('click', function () { setMenu(false); });
+      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !menu.classList.contains('hidden')) setMenu(false);
+      });
+      document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var dark = root.classList.toggle('dark');
+          document.querySelectorAll('[data-theme-toggle]').forEach(function (b) { b.setAttribute('aria-pressed', String(dark)); });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
